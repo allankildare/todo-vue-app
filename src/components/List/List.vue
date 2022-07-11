@@ -1,6 +1,10 @@
 <template>
   <v-container class="task-type">
-    <h1>{{ type }}</h1>
+    <v-badge color="#050505" content="1">
+      <v-card class="py-2 pl-2 mb-3" color="#d4d4d4"  width="180px">
+        <h1 class="text-h5">{{ type }}</h1>
+      </v-card>
+    </v-badge>
     <div v-for="item in tasks" :key="item" class="task">
       <h2>{{ item.name }}</h2>
       <span>{{ item.description }}</span>
@@ -14,6 +18,7 @@
 <script>
 import { defineComponent } from "vue";
 import {
+  VBadge,
   VCard,
   VSnackbar,
   VBtn,
@@ -29,6 +34,7 @@ export default defineComponent({
   },
   components: {
     VApp,
+    VBadge,
     VCard,
     VContainer,
     VSnackbar,
