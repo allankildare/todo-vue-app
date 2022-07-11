@@ -1,6 +1,6 @@
 <template>
   <tasks />
-  <v-btn dark color="blue darken-2" @click="snackbar = true" class="new-task">
+  <v-btn dark color="blue darken-2" @click="toggleTaskModal" class="new-task">
     New task
   </v-btn>
   <v-snackbar v-model="snackbar" :timeout="timeout">
@@ -11,13 +11,53 @@
       </v-btn>
     </template>
   </v-snackbar>
+  <task-modal :modalActive="taskModalActive" @close="toggleTaskModal">
+    <div class="task-modal-content">
+      <h1>Add task</h1>
+      <p>Only some information is needed to add a task, let's go?</p>
+      <v-form ref="form">
+        <v-text-field v-model="model" :counter="max" label="Title" />
+        
+        <v-date-picker v-model="date" mode="dateTime" is24hr>
+          <template v-slot="{ inputValue, inputEvents }">
+            <v-text-field
+              v-model="todayDate"
+              :counter="max"
+              :value="inputValue"
+              v-on="inputEvents"
+              title="Date to complete"
+              single-line
+              placeholder="Date to complete"
+              prepend-inner-icon="mdi-calendar"
+              readonly
+            >
+            </v-text-field>
+          </template>
+        </v-date-picker>
+
+        <v-textarea label="Description"/>
+
+        <v-btn color="primary">Add task</v-btn>
+      </v-form>
+    </div>
+  </task-modal>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { VSnackbar, VBtn, VMain, VApp } from "vuetify/components";
+import { defineComponent, ref } from "vue";
+import {
+  VSnackbar,
+  VBtn,
+  VMain,
+  VApp,
+  VInput,
+  VForm,
+  VTextField,
+  VTextarea
+} from "vuetify/components";
 import HelloWorld from "./components/HelloWorld.vue";
 import Tasks from "./components/Tasks/Tasks.vue";
+import TaskModal from "~/components/TaskModal/TaskModal.vue";
 
 export default defineComponent({
   name: "App",
@@ -29,6 +69,11 @@ export default defineComponent({
     VMain,
     VApp,
     Tasks,
+    TaskModal,
+    VInput,
+    VForm,
+    VTextField,
+    VTextarea
   },
 
   data() {
@@ -38,11 +83,20 @@ export default defineComponent({
       timeout: 2000,
     };
   },
+
+  setup() {
+    const taskModalActive = ref(false);
+
+    function toggleTaskModal() {
+      taskModalActive.value = !taskModalActive.value;
+    }
+
+    return { taskModalActive, toggleTaskModal };
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-
 .new-task {
   position: absolute;
   bottom: 2rem;
