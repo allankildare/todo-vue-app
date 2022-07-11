@@ -17,6 +17,7 @@
     "ress": "^5.0.2",
     "roboto-fontface": "*",
     "vue": "^3.2.25",
+    "vue-class-component": "^7.2.6",
     "vuetify": "^3.0.0-beta.0",
     "webfontloader": "^1.0.0"
   },
