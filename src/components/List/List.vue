@@ -1,7 +1,7 @@
 <template>
   <v-container class="task-type">
     <v-badge color="#050505" content="1">
-      <v-card class="py-2 pl-2 mb-3" color="#d4d4d4"  width="180px">
+      <v-card class="py-2 pl-2 mb-3" color="#d4d4d4" width="180px">
         <h1 class="text-h5">{{ type }}</h1>
       </v-card>
     </v-badge>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 import {
   VBadge,
   VCard,
@@ -25,10 +25,10 @@ import {
   VMain,
   VApp,
   VContainer,
-} from "vuetify/components";
+} from 'vuetify/components'
 
 export default defineComponent({
-  name: "List",
+  name: 'List',
   props: {
     type: String,
   },
@@ -45,26 +45,26 @@ export default defineComponent({
   data: () => ({
     tasks: [
       {
-        name: "Example 1",
-        description: "Do some new projects (1)",
-        date: "2022-07-18T04:08:01.745Z",
-        status: "complete",
+        name: 'Example 1',
+        description: 'Do some new projects (1)',
+        date: '2022-07-18T04:08:01.745Z',
+        status: 'complete',
       },
       {
-        name: "Example 2",
-        description: "Do some new projects (2)",
-        date: "2022-07-18T04:08:01.745Z",
-        status: "late",
+        name: 'Example 2',
+        description: 'Do some new projects (2)',
+        date: '2022-07-18T04:08:01.745Z',
+        status: 'late',
       },
       {
-        name: "Example 3",
-        description: "Do some new projects (3)",
-        date: "2022-07-18T04:08:01.745Z",
-        status: "incomplete",
+        name: 'Example 3',
+        description: 'Do some new projects (3)',
+        date: '2022-07-18T04:08:01.745Z',
+        status: 'incomplete',
       },
     ],
   }),
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -84,8 +84,8 @@ $black: #050505;
     background-color: #fcfcfc;
     padding: 1rem;
     margin-bottom: 1rem;
-    -webkit-box-shadow: 5px 5px 15px -2px rgba(20,20,20,.2);
-    box-shadow: 5px 5px 15px -2px rgba(20,20,20,.2);
+    -webkit-box-shadow: 5px 5px 15px -2px rgba(20, 20, 20, 0.2);
+    box-shadow: 5px 5px 15px -2px rgba(20, 20, 20, 0.2);
   }
   .task:last-child {
     margin-bottom: 0;
