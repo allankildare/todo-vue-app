@@ -167,7 +167,7 @@ export default defineComponent({
             key: 'tasks',
             data: JSON.stringify([
               ...taskData,
-              { title, date, description, status: 'incomplete' },
+              { id: taskData.length, title, date, description, status: 'incomplete' },
             ]),
           })
         },
@@ -175,7 +175,7 @@ export default defineComponent({
           storage.setStorage({
             key: 'tasks',
             data: JSON.stringify([
-              { title, date, description, status: 'incomplete' },
+              { id: 0, title, date, description, status: 'incomplete' },
             ]),
           })
         },
