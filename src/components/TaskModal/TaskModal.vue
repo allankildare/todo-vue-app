@@ -3,12 +3,26 @@
     <div v-show="modalActive" class="task-modal">
       <transition name="modal-animation-inner">
         <div v-show="modalActive" class="modal-inner">
-            <!-- Close -->
-            <!-- modal content -->
-            <slot />
-            <button @click="close" type="button" class="close-button" title="Close tab">
-              <i class="mdi-close-circle mdi v-icon notranslate v-theme--light v-icon--size-large" aria-hidden="true"></i>
-            </button>
+          <!-- Close -->
+          <!-- modal content -->
+          <slot />
+          <button
+            @click="close"
+            type="button"
+            class="close-button"
+            title="Close tab"
+          >
+            <i
+              class="
+                mdi-close-circle mdi
+                v-icon
+                notranslate
+                v-theme--light
+                v-icon--size-large
+              "
+              aria-hidden="true"
+            ></i>
+          </button>
         </div>
       </transition>
     </div>
@@ -16,31 +30,31 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 import { VBtn } from 'vuetify/components'
 
 export default defineComponent({
-  name: "TaskModal",
-  props: ["modalActive"],
+  name: 'TaskModal',
+  props: ['modalActive'],
 
   components: {
-    VBtn
+    VBtn,
   },
-  
+
   setup(props, { emit }) {
     function close() {
       emit('close')
     }
 
     return { close }
-  }
-});
+  },
+})
 </script>
 
 <style lang="scss" scoped>
 .modal-animation-enter-active,
 .modal-animation-leave-active {
-  transition: opacity .4s cubic-bezier(.52, .02, .19, 1.02)
+  transition: opacity 0.4s cubic-bezier(0.52, 0.02, 0.19, 1.02);
 }
 
 .modal-animation-enter-from,
@@ -49,19 +63,19 @@ export default defineComponent({
 }
 
 .modal-animation-inner-enter-active {
-  transition: all .4s cubic-bezier(.52, .02, .19, 1.02) .15s;
+  transition: all 0.4s cubic-bezier(0.52, 0.02, 0.19, 1.02) 0.15s;
 }
 .modal-animation-inner-leave-active {
-  transition: all .4s cubic-bezier(.52, .02, .19, 1.02);
+  transition: all 0.4s cubic-bezier(0.52, 0.02, 0.19, 1.02);
 }
 
 .modal-animation-inner-enter-from {
   opacity: 0;
-  transform: scale(.8);
+  transform: scale(0.8);
 }
 
 .modal-animation-inner-leave-to {
-  transform: scale(.8);
+  transform: scale(0.8);
 }
 /*.modal-animation-leave-to {
   opacity: 1;
@@ -76,8 +90,7 @@ export default defineComponent({
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(20,20,20,.4);
-  
+  background-color: rgba(20, 20, 20, 0.4);
 
   .modal-inner {
     position: relative;
