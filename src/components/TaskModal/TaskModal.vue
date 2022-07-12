@@ -77,9 +77,6 @@ export default defineComponent({
 .modal-animation-inner-leave-to {
   transform: scale(0.8);
 }
-/*.modal-animation-leave-to {
-  opacity: 1;
-}*/
 
 .task-modal {
   display: flex;
