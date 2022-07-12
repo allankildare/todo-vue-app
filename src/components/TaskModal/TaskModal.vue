@@ -35,7 +35,16 @@ import { VBtn } from 'vuetify/components'
 
 export default defineComponent({
   name: 'TaskModal',
-  props: ['modalActive'],
+  props: {
+    modalActive: {
+      type: Boolean,
+      default: false
+    },
+    newTask: {
+      type: Boolean,
+      default: false
+    }
+  },
 
   components: {
     VBtn,
