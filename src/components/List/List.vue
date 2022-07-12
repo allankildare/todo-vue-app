@@ -46,12 +46,16 @@ export default defineComponent({
   setup(props) {
     const state = reactive({
       tasks: [],
+      hasTasksKey: false
     })
     const storage = useStorage()
 
     // pendencies
     // treat case when tasks storage doesn't exist
-    const tasksFromStorage = storage.getStorageSync('tasks')
+    const hasTasksKey = storage.hasKey('tasks')
+    if(hasTasksKey) state.hasTasksKey = true
+    
+    const tasksFromStorage = state.hasTasksKey ? storage.getStorageSync('tasks') : '[]'
     const tasksArr = JSON.parse(tasksFromStorage)
     const filteredTasks = tasksArr.filter(item => item.status === props.type)
 
