@@ -158,26 +158,30 @@ export default defineComponent({
       const { title, date, description } = this.taskForm
       const storage = useStorage()
 
-      const getAndSetStorage =
-        (await storage.getStorage({
-          key: 'tasks',
-          success: ({ data }) => {
-            const taskData = JSON.parse(data)
+      const getAndSetStorage = await storage.getStorage({
+        key: 'tasks',
+        success: ({ data }) => {
+          const taskData = JSON.parse(data)
 
-            storage.setStorage({
-              key: 'tasks',
-              data: JSON.stringify([...taskData, { title, date, description }]),
-            })
-          },
-          fail: () => {
-            storage.setStorage({
-              key: 'tasks',
-              data: JSON.stringify([{ title, date, description }]),
-            })
-          }
-        }))
+          storage.setStorage({
+            key: 'tasks',
+            data: JSON.stringify([
+              ...taskData,
+              { title, date, description, status: 'incomplete' },
+            ]),
+          })
+        },
+        fail: () => {
+          storage.setStorage({
+            key: 'tasks',
+            data: JSON.stringify([
+              { title, date, description, status: 'incomplete' },
+            ]),
+          })
+        },
+      })
 
-        return getAndSetStorage
+      return getAndSetStorage
       // pendencies
       // 3. clear form
       // this.$refs.form.reset()
