@@ -1,8 +1,8 @@
 <template>
   <div class="tasks">
-    <list type="Incomplete" />
-    <list type="Complete" />
-    <list type="Late" />
+    <list type="incomplete" />
+    <list type="complete" />
+    <list type="late" />
   </div>
 </template>
 
