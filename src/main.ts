@@ -11,6 +11,6 @@ loadFonts()
 
 createApp(App)
   .use(VCalendar, {})
-  .use(Vue3Storage, { namespace: 'pro_', storage: StorageType.Local })
+  .use(Vue3Storage, { namespace: 'todoapp_', storage: StorageType.Local })
   .use(vuetify)
   .mount('#app')
