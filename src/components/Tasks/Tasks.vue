@@ -6,13 +6,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue"
 import { VSnackbar, VBtn, VMain, VApp, VContainer } from "vuetify/components"
 import List from './../List/List.vue'
 
 export default defineComponent({
-  name: "Tasks",
+  name: 'Tasks',
   components: {
     List,
     VApp,
@@ -20,10 +20,8 @@ export default defineComponent({
     VSnackbar,
     VBtn,
     VMain,
-    VApp,
-  },
-  data: () => ({}),
-});
+  }
+})
 </script>
 
 <style lang="scss" scoped>
