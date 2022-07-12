@@ -1,12 +1,12 @@
 <template>
   <v-container class="task-type">
-    <v-badge color="#050505" content="1">
+    <v-badge color="#050505" :content="state.tasks.length">
       <v-card class="py-2 pl-2 mb-3" color="#d4d4d4" width="180px">
         <h1 class="text-h5">{{ type }}</h1>
       </v-card>
     </v-badge>
-    <div v-for="item in tasks" :key="item" class="task">
-      <h2>{{ item.name }}</h2>
+    <div v-for="item in state.tasks" :key="item" class="task">
+      <h2>{{ item.title }}</h2>
       <span>{{ item.description }}</span>
       <p v-if="item.status === 'complete'">Completed</p>
       <p v-else-if="item.status === 'incomplete'">In progress</p>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, reactive } from 'vue'
 import {
   VBadge,
   VCard,
@@ -26,6 +26,7 @@ import {
   VApp,
   VContainer,
 } from 'vuetify/components'
+import { useStorage } from 'vue3-storage'
 
 export default defineComponent({
   name: 'List',
@@ -42,28 +43,24 @@ export default defineComponent({
     VMain,
     VApp,
   },
-  data: () => ({
-    tasks: [
-      {
-        name: 'Example 1',
-        description: 'Do some new projects (1)',
-        date: '2022-07-18T04:08:01.745Z',
-        status: 'complete',
-      },
-      {
-        name: 'Example 2',
-        description: 'Do some new projects (2)',
-        date: '2022-07-18T04:08:01.745Z',
-        status: 'late',
-      },
-      {
-        name: 'Example 3',
-        description: 'Do some new projects (3)',
-        date: '2022-07-18T04:08:01.745Z',
-        status: 'incomplete',
-      },
-    ],
-  }),
+  setup(props) {
+    const state = reactive({
+      tasks: [],
+    })
+    const storage = useStorage()
+
+    // pendencies
+    // treat case when tasks storage doesn't exist
+    const tasksFromStorage = storage.getStorageSync('tasks')
+    const tasksArr = JSON.parse(tasksFromStorage)
+    const filteredTasks = tasksArr.filter(item => item.status === props.type)
+
+    onMounted(() => {
+      if (tasksArr.length > 0) state.tasks = filteredTasks
+    })
+
+    return { state }
+  },
 })
 </script>
 
