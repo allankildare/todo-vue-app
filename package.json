@@ -17,6 +17,8 @@
     "@mdi/font": "5.9.55",
     "@vuelidate/core": "^2.0.0-alpha.42",
     "@vuelidate/validators": "^2.0.0-alpha.30",
+    "dayjs": "^1.11.3",
+    "pinia": "^2.0.16",
     "ress": "^5.0.2",
     "roboto-fontface": "*",
     "v-calendar": "^3.0.0-alpha.8",
@@ -26,6 +28,7 @@
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
+    "@types/vue-ls": "^3.2.3",
     "@types/webfontloader": "^1.0.0",
     "@typescript-eslint/parser": "^5.30.6",
     "@vitejs/plugin-vue": "^2.3.3",
@@ -38,7 +41,7 @@
     "vite": "^2.9.9",
     "vite-plugin-vuetify": "^1.0.0-alpha.0",
     "vue-cli-plugin-vuetify": "~2.5.1",
-    "vue-tsc": "^0.34.7",
-    "vue3-storage": "^0.1.11"
+    "vue-ls": "^4.2.0",
+    "vue-tsc": "^0.34.7"
   }
 }
