@@ -1,16 +1,22 @@
 <template>
   <transition name="modal-animation">
-    <div v-show="modalActive" class="task-modal">
+    <div
+      v-show="modalActive"
+      class="task-modal"
+    >
       <transition name="modal-animation-inner">
-        <div v-show="modalActive" class="modal-inner">
+        <div
+          v-show="modalActive"
+          class="modal-inner"
+        >
           <!-- Close -->
           <!-- modal content -->
           <slot />
           <button
-            @click="close"
             type="button"
             class="close-button"
             title="Close tab"
+            @click="close"
           >
             <i
               class="
@@ -21,7 +27,7 @@
                 v-icon--size-large
               "
               aria-hidden="true"
-            ></i>
+            />
           </button>
         </div>
       </transition>
@@ -31,7 +37,6 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { VBtn } from 'vuetify/components'
 
 export default defineComponent({
   name: 'TaskModal',
@@ -46,9 +51,6 @@ export default defineComponent({
     }
   },
 
-  components: {
-    VBtn,
-  },
 
   setup(props, { emit }) {
     function close() {
