@@ -5,12 +5,14 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import Vue3Storage, { StorageType } from 'vue3-storage'
 import VCalendar from 'v-calendar'
+import * as dayjs from 'dayjs'
 import 'ress'
 import 'v-calendar/dist/style.css'
 
 loadFonts()
 
 const pinia = createPinia()
+const app = createApp(App)
 
 createApp(App)
   .use(pinia)
@@ -18,3 +20,5 @@ createApp(App)
   .use(Vue3Storage, { namespace: 'todoapp_', storage: StorageType.Local })
   .use(vuetify)
   .mount('#app')
+
+app.config.globalProperties.$dayjs = dayjs
