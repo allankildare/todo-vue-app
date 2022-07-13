@@ -1,22 +1,64 @@
 <template>
   <v-container class="task-type">
-    <v-badge color="#050505" :content="state.tasks.length">
-      <v-card class="py-2 pl-2 mb-3" color="#d4d4d4" width="180px">
+    <v-badge
+      color="#050505"
+      :content="filteredTasks.length"
+    >
+      <v-card
+        class="py-2 pl-2 mb-3"
+        color="#d4d4d4"
+        width="180px"
+      >
         <h1 class="text-h5">{{ type }}</h1>
       </v-card>
     </v-badge>
-    <div v-for="item in state.tasks" :key="item" class="task">
-      <h2>{{ item.title }}</h2>
-      <span>{{ item.description }}</span>
-      <p v-if="item.status === 'complete'">Completed</p>
-      <p v-else-if="item.status === 'incomplete'">In progress</p>
-      <p v-else>Late</p>
+    <div class="tasks-list">
+      <div
+        v-for="item in filteredTasks"
+        :key="item"
+        class="task"
+      >
+        <div class="d-flex flex-row justify-space-between align-center">
+          <p
+            v-if="item.status === 'complete'"
+            class="font-italic"
+          >
+            Completed
+          </p>
+          <p
+            v-else-if="item.status === 'incomplete' && !isTaskLate(item.date)"
+            class="font-italic"
+          >
+            In progress
+          </p>
+          <p
+            v-else
+            class="font-italic"
+          >
+            Late
+          </p>
+          <v-btn
+            v-if="item.status !== 'complete'"
+            color="success"
+            size="small"
+            @click="tasksStore.completeTask(item.id)"
+          >
+            <span class="text-black">Complete</span>
+          </v-btn>
+        </div>
+        
+        
+        <h2 class="text-truncate">
+          {{ item.title }}
+        </h2>
+        <p>{{ item.description }}</p>
+      </div>
     </div>
   </v-container>
 </template>
 
 <script>
-import { defineComponent, onMounted, reactive } from 'vue'
+import { defineComponent, onMounted, reactive, computed } from 'vue'
 import {
   VBadge,
   VCard,
@@ -25,16 +67,15 @@ import {
   VMain,
   VApp,
   VContainer,
+  VCheckbox,
+  VHover,
 } from 'vuetify/components'
-import { useStorage } from 'vue3-storage'
+import { isTaskLate } from '~/helpers/validateDate'
+import { useTasksStore } from '~/stores/useTasksStore'
 
 export default defineComponent({
   name: 'List',
-  props: {
-    type: String,
-  },
   components: {
-    VApp,
     VBadge,
     VCard,
     VContainer,
@@ -42,28 +83,39 @@ export default defineComponent({
     VBtn,
     VMain,
     VApp,
+    VCheckbox,
+    VHover,
   },
-  setup(props) {
-    const state = reactive({
-      tasks: [],
-      hasTasksKey: false
-    })
-    const storage = useStorage()
 
-    // pendencies
-    // treat case when tasks storage doesn't exist
-    const hasTasksKey = storage.hasKey('tasks')
-    if(hasTasksKey) state.hasTasksKey = true
+  props: {
+    type: {
+      type: String,
+      default: ''
+    },
+  },
+  
+
+  setup(props) {
+    const tasksStore = useTasksStore()
     
-    const tasksFromStorage = state.hasTasksKey ? storage.getStorageSync('tasks') : '[]'
-    const tasksArr = JSON.parse(tasksFromStorage)
-    const filteredTasks = tasksArr.filter(item => item.status === props.type)
+    const filteredTasks = computed(() => {
+      // checking type and returning filtered lists
+      if (props.type === 'incomplete') {
+        return tasksStore.tasks.filter(item => !isTaskLate(item.date) && item.status === 'incomplete')
+      }
+
+      if (props.type === 'late') {
+        return tasksStore.tasks.filter(item => isTaskLate(item.date) && item.status === 'incomplete')
+      }
+
+      return tasksStore.tasks.filter(item => item.status === 'complete')
+    })
 
     onMounted(() => {
-      if (tasksArr.length > 0) state.tasks = filteredTasks
+      tasksStore.populateTasks()
     })
 
-    return { state }
+    return { tasksStore, filteredTasks, isTaskLate }
   },
 })
 </script>
@@ -73,6 +125,12 @@ $white: #fcfcfc;
 $black: #050505;
 
 .task-type {
+  .tasks-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 1rem);
+    max-height: calc(100% - 1rem);
+  }
   & > h1 {
     background-color: #333;
     color: $white;
@@ -80,11 +138,25 @@ $black: #050505;
     border-radius: 10px;
     margin-bottom: 1rem;
   }
+
   .task {
     border-radius: 10px;
     background-color: #fcfcfc;
     padding: 1rem;
     margin-bottom: 1rem;
+    & > p {
+      overflow-wrap: break-word;
+      hyphens: auto;
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 120px; /* max of 5 lines*/
+    }
+
+    .complete-button {
+      margin: 1rem 0 0 auto;
+    }
+
     -webkit-box-shadow: 5px 5px 15px -2px rgba(20, 20, 20, 0.2);
     box-shadow: 5px 5px 15px -2px rgba(20, 20, 20, 0.2);
   }

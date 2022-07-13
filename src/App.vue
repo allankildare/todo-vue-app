@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from 'vue'
+import { defineComponent, ref, onMounted, reactive, computed } from 'vue'
 import {
   VSnackbar,
   VBtn,
@@ -70,7 +70,8 @@ import {
 } from 'vuetify/components'
 import Tasks from './components/Tasks/Tasks.vue'
 import TaskModal from '~/components/TaskModal/TaskModal.vue'
-import { useStorage } from 'vue3-storage'
+import { useTasksStore } from '~/stores/useTasksStore'
+// use vuelidate
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
 
@@ -90,6 +91,22 @@ export default defineComponent({
     VTextarea,
   },
 
+  setup() {
+    // pendencies
+    // 1. transform values into states
+    // 2. create computed rules
+
+    const tasksStore = useTasksStore()
+
+    const taskModalActive = ref(false)
+
+    function toggleTaskModal() {
+      taskModalActive.value = !taskModalActive.value
+    }
+
+    return { taskModalActive, toggleTaskModal, tasksStore }
+  },
+
   data() {
     return {
       snackbar: false,
@@ -101,7 +118,7 @@ export default defineComponent({
           (value || '').length <= 1000 ||
           'Description must be 1000 characters or less.',
         minLength: (value: string) =>
-          value.length > 2 || 'This field must have at least 2 characters',
+          value.length >= 2 || 'This field must have at least 2 characters',
       },
       taskForm: {
         title: '',
@@ -111,77 +128,17 @@ export default defineComponent({
     }
   },
 
-  setup() {
-    // pendencies
-    // 1. transform values into states
-    // 2. create computed rules
-    // const state = reactive({
-    //   title: '',
-    //   date: '',
-    //   description: '',
-    // })
-
-    // const rules = computed(() => {
-    //   const localRules = {
-    //     title: {
-    //       required,
-    //       minLength: minLength(2),
-    //     },
-    //     date: {
-    //       required,
-    //     },
-    //     description: {
-    //       required,
-    //       minLength: minLength(2),
-    //     },
-    //       required: (value: string) => !!value || 'This field is required',
-    //       counter: (value: string) => value.length
-
-    //   }
-
-    //   return localRules
-    // })
-
-    // const v$ = useVuelidate(rules, state)
-
-    const taskModalActive = ref(false)
-
-    function toggleTaskModal() {
-      taskModalActive.value = !taskModalActive.value
-    }
-
-    return { taskModalActive, toggleTaskModal }
-  },
-
   methods: {
     async submit() {
       const { title, date, description } = this.taskForm
-      const storage = useStorage()
+      const tasksStore = useTasksStore()
 
-      const getAndSetStorage = await storage.getStorage({
-        key: 'tasks',
-        success: ({ data }) => {
-          const taskData = JSON.parse(data)
-
-          storage.setStorage({
-            key: 'tasks',
-            data: JSON.stringify([
-              ...taskData,
-              { id: taskData.length, title, date, description, status: 'incomplete' },
-            ]),
-          })
-        },
-        fail: () => {
-          storage.setStorage({
-            key: 'tasks',
-            data: JSON.stringify([
-              { id: 0, title, date, description, status: 'incomplete' },
-            ]),
-          })
-        },
+      return tasksStore.addTask({
+        title,
+        date,
+        description,
       })
 
-      return getAndSetStorage
       // pendencies
       // 3. clear form
       // this.$refs.form.reset()
