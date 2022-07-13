@@ -1,26 +1,30 @@
 <template>
-  <div class="tasks">
+  <div class="tasks" v-if="!isTasksEmpty">
     <list type="incomplete" />
-    <list type="complete" />
     <list type="late" />
+    <list type="complete" />
+  </div>
+  <div v-else>
+    <!-- temporary text -->
+    <p>You don't have tasks yet</p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
-import { VSnackbar, VBtn, VMain, VApp, VContainer } from "vuetify/components"
+import { defineComponent } from 'vue'
+import { useTasksStore } from '~/stores/useTasksStore'
 import List from './../List/List.vue'
 
 export default defineComponent({
   name: 'Tasks',
   components: {
     List,
-    VApp,
-    VContainer,
-    VSnackbar,
-    VBtn,
-    VMain,
-  }
+  },
+  setup() {
+    const tasksStore = useTasksStore()
+    const isTasksEmpty = tasksStore.tasks.length
+    return { isTasksEmpty }
+  },
 })
 </script>
 
@@ -41,7 +45,6 @@ $green: #3b9d78;
 
   & > div {
     width: 30%;
-    border-radius: 10px;
     height: 80vh;
   }
 }
