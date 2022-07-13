@@ -3,7 +3,6 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
-import Vue3Storage, { StorageType } from 'vue3-storage'
 import VCalendar from 'v-calendar'
 import * as dayjs from 'dayjs'
 import 'ress'
@@ -17,8 +16,11 @@ const app = createApp(App)
 createApp(App)
   .use(pinia)
   .use(VCalendar, {})
-  .use(Vue3Storage, { namespace: 'todoapp_', storage: StorageType.Local })
   .use(vuetify)
   .mount('#app')
 
 app.config.globalProperties.$dayjs = dayjs
+
+// App logs
+console.log('%cTo-Do Vue App', 'color: #449646; font-size: 24px')
+console.log('%cWelcome to DevTools\nThis application was developed by Allan Kildare\nhttps://github.com/allankildare', 'color: #449646; font-weight: bold')
