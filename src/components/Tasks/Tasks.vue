@@ -29,6 +29,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// TO DO: responsive tasks list
 $white: #fcfcfc;
 $gray: #f3f3f5;
 $black: #050505;
