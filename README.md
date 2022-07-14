@@ -12,8 +12,8 @@
 In this project I am developing a web To-do App, there are some requirements:
 
 - [x] Use Vue.js and Vuetify components
-- [ ] Tasks should have **name**, **description**, **date to complete** and **status** (_complete, incomplete and late_)
-- [ ] The user should have the option to **update** or **delete** the task
-- [ ] The list of tasks should have filters by status
+- [x] Tasks should have **name**, **description**, **date to complete** and **status** (_complete, incomplete and late_)
+- [ ] The user should have the option to **update** or **delete** the task *(50%)*
+- [x] The list of tasks should have filters by status
 - [ ] All the frontend should be responsiveness
-- [ ] Save all the data on the local storage
+- [x] Save all the data on the local storage
