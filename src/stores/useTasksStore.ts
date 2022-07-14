@@ -11,6 +11,7 @@ interface Task {
 
 const LOCAL_NAME = 'tasks'
 
+// this store uses Pinia 🍍 as state manegement library (next generation Vuex)
 export const useTasksStore = defineStore('tasks', {
   state: () => ({ tasks: [] as Task[] }),
 
