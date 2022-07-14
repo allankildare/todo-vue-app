@@ -1,5 +1,6 @@
 <template>
   <v-container class="task-type">
+    <!-- TO DO: when click in the tasks open taskModal, user can edit -->
     <v-badge
       color="#050505"
       :content="filteredTasks.length"
@@ -18,40 +19,49 @@
         :key="item"
         class="task"
       >
-        <div class="d-flex flex-row justify-space-between align-center">
-          <p
-            v-if="item.status === 'complete'"
-            class="font-italic"
-          >
-            Completed
-          </p>
-          <p
-            v-else-if="item.status === 'incomplete' && !isTaskLate(item.date)"
-            class="font-italic"
-          >
-            In progress
-          </p>
-          <p
-            v-else
-            class="font-italic"
-          >
-            Late
-          </p>
-          <v-btn
-            v-if="item.status !== 'complete'"
-            color="success"
-            size="small"
-            @click="tasksStore.completeTask(item.id)"
-          >
-            <span class="text-black">Complete</span>
-          </v-btn>
-        </div>
-        
-        
+        <!-- TO DO: transform p tag in a Vuetify badge -->
+        <p
+          v-if="item.status === 'complete'"
+          class="font-italic"
+        >
+          Completed
+        </p>
+        <p
+          v-else-if="item.status === 'incomplete' && !isTaskLate(item.date)"
+          class="font-italic"
+        >
+          In progress
+        </p>
+        <p
+          v-else
+          class="font-italic"
+        >
+          Late
+        </p>
         <h2 class="text-truncate">
           {{ item.title }}
         </h2>
         <p>{{ item.description }}</p>
+
+        <div class="d-flex flex-row justify-end align-center">
+          <v-btn
+            v-if="item.status !== 'complete'"
+            icon="mdi-check"
+            color="success"
+            size="small"
+            title="Complete task"
+            class="mr-2"
+            @click="tasksStore.completeTask(item.id)"
+          />
+          
+          <v-btn
+            icon="mdi-delete"
+            color="error"
+            size="small"
+            title="Delete task"
+            @click="tasksStore.deleteTask(item.id)"
+          />
+        </div>
       </div>
     </div>
   </v-container>
@@ -81,10 +91,6 @@ export default defineComponent({
     VContainer,
     VSnackbar,
     VBtn,
-    VMain,
-    VApp,
-    VCheckbox,
-    VHover,
   },
 
   props: {
@@ -99,6 +105,7 @@ export default defineComponent({
     const tasksStore = useTasksStore()
     
     const filteredTasks = computed(() => {
+      // TO DO: when user clicks to complete or delete task a snackbar will appear and disappear 2s later
       // checking type and returning filtered lists
       if (props.type === 'incomplete') {
         return tasksStore.tasks.filter(item => !isTaskLate(item.date) && item.status === 'incomplete')
