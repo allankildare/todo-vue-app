@@ -230,7 +230,6 @@ export default defineComponent({
 
     function editTask() {
       state.editable = !state.editable
-      console.log(state.editable)
     }
 
     async function submit(id: number) {
