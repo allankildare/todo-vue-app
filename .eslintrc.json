@@ -16,6 +16,7 @@
   "plugins": [],
   "rules": {
     "eol-last": "error",
+    "no-console": ["error", { "allow": ["warn", "error"]}],
     "vue/multi-word-component-names": [
       "error",
       {
