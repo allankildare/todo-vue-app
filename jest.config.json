@@ -1,0 +1,12 @@
+{
+    "moduleNameMapper": {
+        "~/(.*)": "<rootDir>/src/$1"
+    },
+    "globals": {
+        "ts-jest": {
+            "tsconfig": "tsconfig.json",
+            "diagnostics": false
+        }
+    },
+    "preset": "ts-jest"
+}
