@@ -16,7 +16,7 @@
             type="button"
             class="close-button"
             title="Close tab"
-            @click="close"
+            @click.stop="close"
           >
             <i
               class="
@@ -40,6 +40,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'TaskModal',
+  
   props: {
     modalActive: {
       type: Boolean,
@@ -50,7 +51,8 @@ export default defineComponent({
       default: false
     }
   },
-
+  
+  emits: ['close'],
 
   setup(props, { emit }) {
     function close() {
@@ -96,6 +98,7 @@ export default defineComponent({
   height: 100vh;
   width: 100vw;
   position: fixed;
+  z-index: 100;
   top: 0;
   left: 0;
   background-color: rgba(20, 20, 20, 0.4);
