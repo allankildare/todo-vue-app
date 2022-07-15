@@ -88,13 +88,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import {
-  VSnackbar,
-  VBtn,
-  VForm,
-  VTextField,
-  VTextarea,
-} from 'vuetify/components'
 import Tasks from './components/Tasks/Tasks.vue'
 import TaskModal from '~/components/TaskModal/TaskModal.vue'
 import { useTasksStore } from '~/stores/useTasksStore'
@@ -104,13 +97,8 @@ export default defineComponent({
   name: 'App',
 
   components: {
-    VSnackbar,
-    VBtn,
     Tasks,
     TaskModal,
-    VForm,
-    VTextField,
-    VTextarea,
   },
 
   setup() {

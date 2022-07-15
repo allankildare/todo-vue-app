@@ -156,30 +156,13 @@ import { defineComponent, reactive, computed, ref } from 'vue'
 import { capitalizeFirstLetter } from '~/helpers/capitalizeFirstLetter'
 import TaskModal from '~/components/TaskModal/TaskModal.vue'
 
-import {
-  VBadge,
-  VCard,
-  VBtn,
-  VContainer,
-  VTextField,
-  VForm,
-  VTextarea,
-} from 'vuetify/components'
-
 import { isTaskLate, timeFromNow, formatDate } from '~/helpers/validateDate'
 import { useTasksStore } from '~/stores/useTasksStore'
 
 export default defineComponent({
   name: 'List',
   components: {
-    VBadge,
-    VCard,
-    VContainer,
-    VBtn,
     TaskModal,
-    VTextField,
-    VForm,
-    VTextarea,
   },
 
   props: {

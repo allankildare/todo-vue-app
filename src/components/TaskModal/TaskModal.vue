@@ -9,7 +9,6 @@
           v-show="modalActive"
           class="modal-inner"
         >
-          <!-- Close -->
           <!-- modal content -->
           <slot />
           <button
