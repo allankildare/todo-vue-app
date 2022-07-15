@@ -22,5 +22,6 @@ createApp(App)
 app.config.globalProperties.$dayjs = dayjs
 
 // App logs
+/* eslint no-console: */
 console.log('%cTo-Do Vue App', 'color: #449646; font-size: 24px')
 console.log('%cWelcome to DevTools\nThis application was developed by Allan Kildare\nhttps://github.com/allankildare', 'color: #449646; font-weight: bold')
