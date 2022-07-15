@@ -11,7 +11,8 @@
     "build": "vite build",
     "dev": "vite",
     "preview": "vite preview",
-    "lint": "eslint --ext .ts,vue --ignore-path .gitignore ."
+    "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
+    "test": "jest"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
