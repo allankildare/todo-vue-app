@@ -1,13 +1,6 @@
 import { defineStore } from 'pinia'
 import ls from './localStorage'
-
-interface Task {
-  id: number
-  title: string
-  date: string
-  description: string
-  status: 'incomplete' | 'complete' | 'late'
-}
+import { Task } from '~/types'
 
 const LOCAL_NAME = 'tasks'
 
@@ -23,6 +16,10 @@ export const useTasksStore = defineStore('tasks', {
         const tasksData = await JSON.parse(tasksLS)
         return (this.tasks = tasksData)
       }
+    },
+
+    async findTask(id: number) {
+      return this.tasks.find(task => task.id === id)
     },
 
     async addTask(newTask: Omit<Task, 'status' | 'id'>) {
@@ -94,6 +91,7 @@ export const useTasksStore = defineStore('tasks', {
   },
   getters: {
     getTasks: state => state.tasks,
+    getTasksLength: state => state.tasks.length
     // TO DO: getters to filtered tasks (incomplete, complete and late)
   },
 })
