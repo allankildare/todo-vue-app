@@ -1,6 +1,5 @@
 <template>
   <v-container class="task-type">
-    <!-- TO DO: when click in the tasks open taskModal, user can edit -->
     <v-badge
       color="#050505"
       :content="filteredTasks.length"
@@ -15,6 +14,9 @@
         </h1>
       </v-card>
     </v-badge>
+    <p v-if="filteredTasks.length === 0">
+      You don't have {{ type }} tasks.
+    </p>
     <div class="tasks-list">
       <div
         v-for="task in filteredTasks"
@@ -39,11 +41,14 @@
         >
           Late
         </p>
-        <h2 class="text-truncate">
+        <h2
+          class="text-truncate cursor-pointer"
+          @click="openModal(task.id)"
+        >
           {{ task.title }}
         </h2>
         <p
-          class="task-description"
+          class="cursor-pointer"
           @click="openModal(task.id)"
         >
           {{ task.description }}
@@ -140,7 +145,7 @@
 
             <v-btn
               color="primary"
-              @click="submit(task.id)"
+              @click="submit(taskForModal.id)"
             >
               Edit task
             </v-btn>
@@ -186,7 +191,8 @@ export default defineComponent({
       title: '',
       date: '',
       description: '',
-      status: ''
+      status: '',
+      id: 0
     })
 
     const tasksStore = useTasksStore()
@@ -206,6 +212,7 @@ export default defineComponent({
         taskForModal.date = task.date
         taskForModal.description = task.description
         taskForModal.status = task.status
+        taskForModal.id = id
       }
 
       if (!taskModalActive.value) taskModalActive.value = !taskModalActive.value
@@ -217,12 +224,16 @@ export default defineComponent({
 
     async function submit(id: number) {
       const updatedDate = state.taskEditForm.date ? state.taskEditForm.date : ''
+
       tasksStore.editTask({
         id,
         title: state.taskEditForm.title,
         description: state.taskEditForm.description,
         date: updatedDate,
       })
+
+      // TO DO: update taskForModal values
+
       state.editable = !state.editable
     }
 
@@ -266,6 +277,10 @@ export default defineComponent({
 $white: #fcfcfc;
 $black: #050505;
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .task-type {
   .tasks-list {
     overflow-y: auto;
@@ -294,7 +309,6 @@ $black: #050505;
       overflow: hidden;
       text-overflow: ellipsis;
       max-height: 120px; /* max of 5 lines*/
-      cursor: pointer;
     }
 
     .complete-button {
@@ -306,51 +320,6 @@ $black: #050505;
   }
   .task:last-child {
     margin-bottom: 0;
-  }
-}
-
-@media only screen and (max-width: 690px) {
-  .task-type {
-    .tasks-list {
-      overflow-y: auto;
-      overflow-x: hidden;
-      height: calc(100% - 1rem);
-      max-height: calc(100% - 1rem);
-    }
-    & > h1 {
-      background-color: #333;
-      color: $white;
-      padding-left: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-
-    .task {
-      border-radius: 10px;
-      background-color: #fcfcfc;
-      padding: 1rem;
-      margin-bottom: 1rem;
-
-      & > p {
-        overflow-wrap: break-word;
-        hyphens: auto;
-        word-wrap: break-word;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-height: 120px; /* max of 5 lines*/
-        cursor: pointer;
-      }
-
-      .complete-button {
-        margin: 1rem 0 0 auto;
-      }
-
-      -webkit-box-shadow: 5px 5px 15px -2px rgba(20, 20, 20, 0.2);
-      box-shadow: 5px 5px 15px -2px rgba(20, 20, 20, 0.2);
-    }
-    .task:last-child {
-      margin-bottom: 0;
-    }
   }
 }
 </style>
