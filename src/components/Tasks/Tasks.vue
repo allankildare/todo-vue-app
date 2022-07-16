@@ -102,11 +102,13 @@ $gray: #f3f3f5;
 
 @media only screen and (max-width: 690px) {
   .tasks {
+    height: auto;
     flex-direction: column;
     align-items: center;
 
   & > div {
     width: 90%;
+    height: auto;
   }
 }
 }
