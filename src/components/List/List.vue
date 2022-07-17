@@ -274,8 +274,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$white: #fcfcfc;
-$black: #050505;
+@use '../../styles' as *;
 
 .cursor-pointer {
   cursor: pointer;

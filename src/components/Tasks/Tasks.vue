@@ -54,8 +54,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-// TO DO: responsive tasks list
-$gray: #f3f3f5;
+@use '../../styles' as *;
+
 .empty {
   display: flex;
   justify-content: center;
@@ -74,6 +74,7 @@ $gray: #f3f3f5;
   display: flex;
   padding: 1rem;
   padding-bottom: 0;
+  /*background-color: $gray;*/
   background-color: $gray;
 
   & > div {
