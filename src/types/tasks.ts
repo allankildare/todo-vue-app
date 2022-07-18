@@ -3,5 +3,5 @@ export interface Task {
   title: string
   date: string
   description: string
-  status: 'incomplete' | 'complete' | 'late'
+  status: 'incomplete' | 'complete'
 }
