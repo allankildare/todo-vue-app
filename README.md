@@ -33,4 +33,4 @@ Vite uses `dev` as script to run the apps:
 The dev server will be ruinng at [port 3000](http://localhost:3000) _(verify if it is available)_
 
 ### Deploy
-To deploy this application I used Netlify free service, [click here](https://github-explorer-allankildare.netlify.app/) to see the app.
+To deploy this application I used Netlify free service, [click here](https://todo-vue-app-allankildare.netlify.app/) to see the app.
